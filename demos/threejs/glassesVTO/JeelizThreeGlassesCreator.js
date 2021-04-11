@@ -43,16 +43,12 @@ const JeelizThreeGlassesCreator = function(spec){
     const GLSLcomputeAlpha = 'gl_FragColor.a = smoothstep(uBranchFading.x - uBranchFading.y*0.5, uBranchFading.x + uBranchFading.y*0.5, vPosZ);'
     fragmentShaderSource = fragmentShaderSource.replace('#include <fog_fragment>', GLSLcomputeAlpha);
 
-    const mat = new THREE.ShaderMaterial({
-      vertexShader: vertexShaderSource,
-      fragmentShader: fragmentShaderSource,
-      uniforms: uniforms,
-      flatShading: false,
+    const mat = new THREE.MeshBasicMaterial({
+      envMap: textureEquirec,
+      opacity: 1.0,
+      color: new THREE.Color().setHex(0x000000),
       transparent: true,
-      extensions: { // fix for https://github.com/jeeliz/jeelizFaceFilter/issues/154
-        //derivatives: true,
-        //shaderTextureLOD: true
-      }
+      fog: false
     });
 
     mat.envMap = textureEquirec;
@@ -67,7 +63,7 @@ const JeelizThreeGlassesCreator = function(spec){
     glassesLensesGeometry.computeVertexNormals();
     const mat = new THREE.MeshBasicMaterial({
       envMap: textureEquirec,
-      opacity: 0.7,
+      opacity: 0.4,
       color: new THREE.Color().setHex(0x2233aa),
       transparent: true,
       fog: false
